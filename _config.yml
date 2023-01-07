@@ -12,7 +12,7 @@ toc: true
 
 # setting ( SEO )
 title: 1-blue의 블로그
-tagline: 잘하기 보다는 꾸준하게, 성실하게
+tagline: 아무것도 하지 않을 거면 죽어버려.
 description: FE 개발자, FE 개발자의 블로그, 1-blue의 블로그, 1-blue
 url: https://1-blue.github.io
 
@@ -35,7 +35,7 @@ social:
 # and doesn't have a custom domain.
 baseurl: ""
 
-google_site_verification: # fill in to your verification string
+google_site_verification: huywYkSNBPrM13ynGYVVlIobYgHdrA-aMYeE5iRW2wU
 
 google_analytics:
   id: # fill in your Google Analytics ID
