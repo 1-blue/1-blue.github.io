@@ -127,3 +127,50 @@ type Record<K extends keyof any, T> = {
   [P in K]: T;
 };
 ```
+
+## 📌 Readonly
+> 이펙티브 타입스크립트 100p
+
+특정 객체를 받아서 `readonly`를 적용한채로 반환하는 유틸리티<br />
+
+```ts
+/**
+ * + 송신
+ * 1. 특정 객체
+ *
+ * + 수신
+ * readonly가 적용된 객체
+ */
+type MyReadonly<T> = {
+  readonly [key in keyof T]: T[key];
+};
+
+type Person = {
+  name: string;
+  age: number;
+  vision: {
+    left: number;
+    right: number;
+  };
+};
+
+const person: MyReadonly<Person> = {
+  name: "alice",
+  age: 26,
+  vision: {
+    left: 1.0,
+    right: 1.2,
+  },
+};
+
+// 불가능
+person.name = "blue";
+
+// 가능
+person.vision.left = 1.5;
+
+// ===== 정답 =====
+type Readonly<T> = {
+  readonly [P in keyof T]: T[P];
+};
+```
