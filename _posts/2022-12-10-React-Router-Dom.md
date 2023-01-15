@@ -2,7 +2,11 @@
 title: React-Router-Dom V6의 replace
 author: admin
 date: 2022-12-10 19:48:00 +900
-categories: [FrontEnd, React-Router-Dom]
+lastmod: 2023-01-15 13:56:00 +900
+sitemap:
+  changefreq: monthly
+  priority: 0.5
+categories: [FrontEnd, React]
 tags: [React-Router-Dom, replace, SPA]
 ---
 

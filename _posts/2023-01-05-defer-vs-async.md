@@ -2,7 +2,11 @@
 title: script의 defer vs async
 author: admin
 date: 2023-01-05 09:09:00 +900
-categories: [JavaScript, defer vs async]
+lastmod: 2023-01-15 13:56:00 +900
+sitemap:
+  changefreq: monthly
+  priority: 0.5
+categories: [FrontEnd, JavaScript]
 tags: [script, defet, async]
 ---
 

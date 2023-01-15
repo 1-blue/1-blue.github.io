@@ -2,7 +2,11 @@
 title: Intersection Observer API과 React.js로 무한 스크롤링 구현
 author: admin
 date: 2022-12-25 10:15:00 +900
-categories: [FrontEnd, InfiniteScrolling]
+lastmod: 2023-01-15 13:56:00 +900
+sitemap:
+  changefreq: monthly
+  priority: 0.5
+categories: [FrontEnd, React]
 tags: [Intersection Observer API, InfiniteScrolling]
 ---
 

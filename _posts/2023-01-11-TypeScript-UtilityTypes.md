@@ -7,7 +7,7 @@ lastmod: 2023-01-11 18:46:00 +900
 sitemap:
   changefreq: monthly
   priority: 0.5
-categories: [TypeScript, UtilityTypes]
+categories: [FrontEnd, TypeScript]
 tags: [Pick, Partial, ReturnType, Record]
 ---
 

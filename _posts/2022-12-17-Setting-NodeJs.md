@@ -2,7 +2,11 @@
 title: Node Express + TypeScript 세팅
 author: admin
 date: 2022-12-17 17:47:00 +900
-categories: [Setting, Node.js]
+lastmod: 2023-01-15 13:56:00 +900
+sitemap:
+  changefreq: monthly
+  priority: 0.5
+categories: [BackEnd, Node.js]
 tags: [Node.js, Express, TypeScript, Setting]
 ---
 
@@ -70,6 +74,11 @@ import { errorHandler } from "./handler";
 
 const app = express();
 app.set("port", 3050);
+
+// 2022/12/22 추가 -> body parser ( 이거 안넣으면 POST 요청 시 보내는 데이터가 파싱되지 않아서 빈 값만 출력됩니다... )
+// 까먹고 안넣었다가 axios.post()가 왜 데이터를 못보내지? 왜 못받지? 이러고 혼자 한참 헤맸습니다...
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // // "cors"를 설치했다면 ( 개발모드에서는 "http://localhost:3000"에서의 송수신을 허락한다는 의미 )
 // const corsOrigin =
