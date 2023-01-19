@@ -60,7 +60,7 @@ const createPromiseTimer = (wait, isSuccess, value) =>
 setTimeout(() => console.log("타이머"), 1000);
 ```
 
-만약 타이머에 값을 전달하고 싶다면 [고차함수](/posts/Function/){:target="_blank"}를 이용해서 구현할 수 있습니다.<br />
+만약 타이머에 값을 전달하고 싶다면 [고차함수](/posts/함수/#-고차-함수--higher-order-function-){:target="_blank"}를 이용해서 구현할 수 있습니다.<br />
 
 ```js
 const createTimer = (wait, value) =>
@@ -157,7 +157,7 @@ console.log("밖에서 실행");
 
 ## 0️⃣ Promise 객체 만드는 방법
 글로 설명하기 보다는 바로 예시를 먼저 보여드리고 설명을 작성하겠습니다.<br />
-그리고 사용법에 대해서는 [`Promise.prototype.than()`](/posts/Promise/#0-promiseprototypethanonfulfilled-onrejected)에서 자세히 알아보고 여기서는 `Promise`객체를 만드는 방법에 대해서만 설명하겠습니다.<br />
+그리고 사용법에 대해서는 [`Promise.prototype.than()`](/posts/비동기-콜백-프로미스-async-await/#0-promiseprototypethanonfulfilled-onrejected)에서 자세히 알아보고 여기서는 `Promise`객체를 만드는 방법에 대해서만 설명하겠습니다.<br />
 
 ```js
 // 프로미스 객체 만들기
@@ -179,7 +179,7 @@ const instance = new Promise((resolve, reject) => {
 ( 사실 굳이 외우지 않아도 쓰다보면 외워집니다. )<br />
 
 그리고 `executor`가 받는 두 개의 인자는 성공(`(1)`)과 실패(`(2)`)의 경우로 나눠서 실행하는 데 사용하는 함수입니다.<br />
-성공과 실패에 대해서는 [프로미스의 세 가지 상태](/posts/Promise/#1%EF%B8%8F⃣-프로미스의-세-가지-상태)에서 자세히 살펴보겠습니다.<br />
+성공과 실패에 대해서는 [프로미스의 세 가지 상태](/posts/비동기-콜백-프로미스-async-await/#1%EF%B8%8F⃣-프로미스의-세-가지-상태)에서 자세히 살펴보겠습니다.<br />
 
 ## 1️⃣ 프로미스의 세 가지 상태
 > `[[]]`로 감싸져 있는 속성은 내부에 숨겨진 속성이라서 개발자가 직접적으로 접근할 수 없습니다.
@@ -827,7 +827,7 @@ const fetchSpeed = (age) => new Promise((resolve, reject) => {
 
 # 📮 레퍼런스
 1. [1-blue - 동기와 비동기](/posts/동기-비동기-블로킹-논블로킹/#1%EF%B8%8F⃣-비동기--asynchronous-){:target="_blank"}
-2. [1-blue - 고차함수](/posts/Function/){:target="_blank"}
+2. [1-blue - 고차함수](/posts/함수/#-고차-함수--higher-order-function-){:target="_blank"}
 3. [1-blue - 이벤트 루프와 태스크 큐](/posts/이벤트-루프/){:target="_blank"}
 4. [Javascript info - 프라미스와 async, await](https://ko.javascript.info/async){:target="_blank"}
 5. [MDN - Promise](https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Promise){:target="_blank"}
