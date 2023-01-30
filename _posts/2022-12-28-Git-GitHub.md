@@ -37,7 +37,7 @@ tags: [Git, GitHub]
 `git push <remote-repository-alias> <branch-name>`를 통해서 `local repository`에 저장된 내용을 `remote repository`의 `branch`로 업로드합니다.<br />
 `git pull <remote-repository-alias> <branch-name>`를 통해서 `remote repository`에 저장된 내용을 `local repository`의 `branch`로 가져옵니다.<br />
 
-+ `remote-repository-alias`은 기본적으로 `origin`을 사용합니다. ( [remote 명령어](/posts/Git-GitHub/#9-git-remote) )
++ `remote-repository-alias`은 기본적으로 `origin`을 사용합니다. ( [remote 명령어](/posts/Git-GitHub/#8%EF%B8%8F⃣-git-remote) )
 + `branch-name`은 새로 생성하지 않았다면 `main` 혹은 `master`를 사용합니다.
 
 ## 3️⃣ 파일 상태
