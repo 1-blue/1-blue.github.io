@@ -2,7 +2,7 @@
 title: Git과 GitHub에 대한 정리
 author: admin
 date: 2022-12-28 10:15:00 +900
-lastmod: 2023-01-29 11:08:00 +900
+lastmod: 2023-02-12 18:11:00 +900
 sitemap:
   changefreq: monthly
   priority: 0.5
@@ -99,6 +99,7 @@ tags: [Git, GitHub]
 + `-m`: 간단하게 메시지를 작성하는 옵션 값
 + `--allow-empty-message`: 메시지를 비워두고 커밋을 허용하는 옵션 값
 + `-v`: 변경사항을 메시지에 추가해준다.
++ `--amend`: 가장 최근 커밋 수정
 
 ## 6️⃣ git log
 커밋 목록을 보여주는 명령어이다.
@@ -238,7 +239,25 @@ TODO: 직접 사용해본 후 작성할 예정
 {: .prompt-info}
 
 ## 2️⃣0️⃣ git rebase
-TODO: 직접 사용한 후 작성할 예정
+`rebase`는 병합할 커밋들을 모아서 복사한 뒤에 현재 브랜치에 이어서 붙이는 방식으로 동작합니다.<br />
+즉, 병합한 뒤에 하나의 브랜치에서 커밋을 한 것처럼 보입니다. ( 병합 커밋조차 없음 )<br />
+
+## 2️⃣1️⃣ git cherry-pick
+원하는 커밋만 병합하는 기능입니다.<br />
+병함을 원하는 곳에서 아래 세 가지 방법으로 명령어를 입력하면 됩니다.<br />
+
+1. `<커밋 해시>`
+2. `<커밋 해시>` `<커밋 해시>` ( 작성한 커밋 해시들이 병합됨 )
+3. `<시작 커밋 해시>`..`<마지막 커밋 해시>` ( 당사자 불포함 )
+
++ 충돌 시 -> 충돌 해결하고 -> `git add .` -> `git cherry-pick --continue`
++ 충돌 시 되돌리기: `git cherry-pick --abort`
+
+## 2️⃣2️⃣ git tag
+`git tag 태그명 [커밋 해시 | 브랜치]`
+
+## 2️⃣3️⃣ git describe
+`git describe: v1-3-g2506dae ( <가까운태그명>-<커밋개수>-g<커밋해시> )`
 
 # 💡 개인적으로 자주 사용하는 개념들
 ## 0️⃣ add 취소
@@ -250,7 +269,7 @@ TODO: 직접 사용한 후 작성할 예정
 1. [`git reset`](/posts/Git-GitHub/#1%EF%B8%8F⃣7%EF%B8%8F⃣-git-reset-commit-id--head--headn): 이전에 했던 커밋을 흔적도 남기지 않고 지워버리는 방법입니다.<br />
 2. [`git revert`](/posts/Git-GitHub/#1%EF%B8%8F⃣8%EF%B8%8F⃣-git-revert): 이전에 했던 커밋을 지우는 커밋을 추가하면서 커밋을 제거하는 방법입니다.<br />
 
-### 3. 브랜치 제거
+## 2️⃣ 브랜치 제거
 `git branch -d <브랜치명>`를 사용하면 `master`와 병합되지 않아서 제거할 수 없다는 문구가 나오면서 제거하지 못합니다.<br />
 병합할 목적이 없다면 원격 레포지토리에서도 제거했으니 강제로 로컬 레포지토리에서 제거해도 문제되지 않습니다.<br />
 
@@ -322,6 +341,8 @@ TODO: 직접 사용한 후 작성할 예정
 TODO:
 1. ssh<br />
 1. upstream<br />
+1. PR
 
 # 📮 레퍼런스
 1. « Git 교과서 » ( 이호진 지음, 길벗, 2020 )
+2. [learngitbranching](https://learngitbranching.js.org/?locale=ko){:target="_blank"}
