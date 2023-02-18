@@ -3,7 +3,7 @@ layout: post
 title: 리덕스 툴킷 ( Redux-Toolkit + TypeScript + React ) 
 author: admin
 date: 2023-02-17 23:41:00 +900
-lastmod: 2023-02-17 23:41:00 +900
+lastmod: 2023-02-18 22:09:00 +900
 sitemap:
   changefreq: monthly
   priority: 0.5
@@ -403,7 +403,7 @@ export default userSlice.reducer;
 현재 `stackblitz`에서는 이상하게 타입 오류가 발생하는데 실제로 `VSCode`에서 그대로 실행하면 정상적으로 동작합니다.<br />
 ( 오류를 추적해보면 [여기](https://stackblitz.com/edit/react-ts-gpquey?file=index.tsx,src%2Fcomponents%2FApp.tsx,src%2Fstore%2Freducers%2Ftodo.ts,node_modules%2F%40reduxjs%2Ftoolkit%2Fdist%2Findex.d.ts){:target="_blank"}에 도달하는데 `immer`, `reselect`, `redux-thunk`을 찾을 수 없다고 하는데 기본적으로 `RTK`에 내장되어 있는 걸로 알고 있고, 직접 설치해도 오류가 사라지지는 않습니다... 😥 )<br />
 
-<iframe height="500" style="width: 100%;" scrolling="no" src="https://stackblitz.com/edit/react-ts-gpquey?devToolsHeight=33&embed=1&file=src/store/configureStore.ts"></iframe>
+<iframe height="600" style="width: 100%;" scrolling="no" src="https://stackblitz.com/edit/react-ts-gpquey?ctl=1&embed=1&file=index.tsx"></iframe>
 
 # 📮 레퍼런스
 1. [Redux-Toolkit 공식 문서 - TypeScript Quick Start](https://redux-toolkit.js.org/tutorials/typescript){:target="_blank"}

@@ -2,22 +2,22 @@
 title: Intersection Observer API과 React.js로 무한 스크롤링 구현
 author: admin
 date: 2022-12-25 10:15:00 +900
-lastmod: 2023-01-15 13:56:00 +900
+lastmod: 2023-02-18 22:00:00 +900
 sitemap:
   changefreq: monthly
   priority: 0.5
 categories: [FrontEnd, React]
-tags: [Intersection Observer API, InfiniteScrolling]
+tags: [Intersection Observer API, InfiniteScrolling, 무한 스크롤링]
 ---
 
 > 해당 포스트는 `Intersection Observer API`의 기본 사용법과 `React.js`에서의 활용을 통한 무한 스크롤링 구현 방법에 대한 포스트입니다. ( [참고한 포스트](https://velog.io/@elrion018/%EC%8B%A4%EB%AC%B4%EC%97%90%EC%84%9C-%EB%8A%90%EB%82%80-%EC%A0%90%EC%9D%84-%EA%B3%81%EB%93%A4%EC%9D%B8-Intersection-Observer-API-%EC%A0%95%EB%A6%AC){:target="_blank"} )
 {: .prompt-info}
 
-## 🔬 Intersection Observer API
+# 🔬 Intersection Observer API
 `Intersection Observer API`는 루트 요소와 타겟 요소의 교차점을 관찰하고 루트 요소와 타겟 요소가 교차하는지 판단하는 기능 제공합니다.<br />
 즉, 쉽게 말해서 특정 `element`가 뷰포트(화면)에 들어왔는지, 혹은 들어오는 시점을 알려주는 `API`입니다.<br />
 
-### 1. 기본 형태
+## 0️⃣ 기본 형태
 ```ts
 const callback = (entries: IntersectionObserverEntry[], observer: IntersectionObserver) => {
   entries.forEach(entry => {
@@ -53,15 +53,7 @@ let observer = new IntersectionObserver(callback, options)
             예를 들어 `0.5`라면 타켓 요소의 `50%`가 뷰포트에 들어오면 `callback`을 실행
             만약 범위별로 실행하고 싶다면 `[0, 0.25, 0.5, 0.75, 1]`과 같이 선언하면 `0%~100%`사이의 `25%`단위로 `callback`실행
 
-
-### 2. 코드 예시
-<iframe height="300" style="width: 100%;" scrolling="no" title="Intersection Observer" src="https://codepen.io/1-blue/embed/LYBpZwv?default-tab=html%2Cresult" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
-  See the Pen <a href="https://codepen.io/1-blue/pen/LYBpZwv">
-  Intersection Observer</a> by 1-blue (<a href="https://codepen.io/1-blue">@1-blue</a>)
-  on <a href="https://codepen.io">CodePen</a>.
-</iframe>
-
-## ♾️ 무한 스크롤링
+# ♾️ 무한 스크롤링
 무한 스크롤링이란 스크롤을 특정 지점 이하로 내릴 때마다 계속 데이터를 패치해서 화면에 렌더링해서 화면을 계속 채워서 무한으로 스크롤을 내릴 수 있는 것처럼 보이게 만드는 기능을 말합니다.<br />
 
 보통은 스크롤 이벤트로 구현을 합니다.<br />
@@ -80,7 +72,7 @@ let observer = new IntersectionObserver(callback, options)
 > `reflow`는 렌더트리의 노드들의 정확한 크기와 위치를 다시 계산하는 과정을 말합니다.
 {: .prompt-info}
 
-### 1. React에서 Intersection Observer를 이용한 무한 스크롤링 예시 ( feat. TS )
+## 0️⃣ React에서 Intersection Observer를 이용한 무한 스크롤링 예시 ( feat. TS )
 ```tsx
 import { useCallback, useEffect } from "react";
 
@@ -140,3 +132,10 @@ export default useInfiniteScrolling;
 3. 데이터를 더 패치할 수 있는지 판단할 변수를 생성합니다. ( `hasMore` 서버에 데이터가 남아있다면 추가로 패치 가능 )
 4. `1`, `2`, `3`에서 생성한 변수/함수를 `useInfiniteScrolling()`에 넣습니다.
 5. `1`에서 생성한 `<div />`가 화면에 들어온다면 데이터를 추가로 패치하고 렌더링하면 `<div />`가 다시 맨 아래로 내려가서 데이터만 있다면 무한으로 반복할 수 있습니다.
+
+## 1️⃣ StackBlitz 예시
+
+<iframe height="600" style="width: 100%;" scrolling="no" title="Intersection Observer" src="https://stackblitz.com/edit/react-ts-mpggtg?ctl=1&embed=1&file=src/components/App.tsx" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true"></iframe>
+
+# 📮 레퍼런스
+1. [elrion018 - 실무에서 느낀 점을 곁들인 Intersection Observer API 정리](https://velog.io/@elrion018/%EC%8B%A4%EB%AC%B4%EC%97%90%EC%84%9C-%EB%8A%90%EB%82%80-%EC%A0%90%EC%9D%84-%EA%B3%81%EB%93%A4%EC%9D%B8-Intersection-Observer-API-%EC%A0%95%EB%A6%AC){:target="_blank"}

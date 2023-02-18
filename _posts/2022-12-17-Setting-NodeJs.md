@@ -2,7 +2,7 @@
 title: Node Express + TypeScript 세팅
 author: admin
 date: 2022-12-17 17:47:00 +900
-lastmod: 2023-01-15 13:56:00 +900
+lastmod: 2023-02-14 20:27:00 +900
 sitemap:
   changefreq: monthly
   priority: 0.5
@@ -10,11 +10,11 @@ categories: [BackEnd, Node.js]
 tags: [Node.js, Express, TypeScript, Setting]
 ---
 
-> 본 포스트는 `Node`의 `Express`에 `TypeScript`를 이용한 백엔드 구축 세팅에 대한 포스팅입니다.
+> 본 포스트는 `Node`의 `Express`에 `TypeScript`를 이용한 백엔드 구축 세팅에 대한 포스팅입니다.<br />
 {: .prompt-info }
 
-# 📌 설치
-## 1. 필수로 설치할 패키지
+# 📃 설치
+## 0️⃣ 필수로 설치할 패키지
 ```bash
 npm i express
 npm i -D typescript nodemon @types/node @types/express concurrently
@@ -26,7 +26,7 @@ npm i -D typescript nodemon @types/node @types/express concurrently
 4. `@types/express`: `Express`에 타입을 적용하기 위해 설치
 5. `concurrently`: 여러 명령어를 동시 실행하기 위해 설치
 
-## 2. 추가로 설치하면 좋은 패키지
+## 1️⃣ 추가로 설치하면 좋은 패키지
 ```bash
 # ".env" 파일 즉 환경 변수를 사용하기 위해 설치
 npm i dotenv
@@ -41,8 +41,8 @@ npm i axios
 # 이후에 더 설치하면 추가할 예정...
 ```
 
-# 📌 세팅
-## 1. TypeScript 세팅
+# ⚙️ 세팅
+## 0️⃣ TypeScript 세팅
 ```bash
 # typescript를 설치해야 가능 ( 혹은 글로벌로 설치했다면 가능 )
 npx tsc --init
@@ -51,8 +51,8 @@ npx tsc --init
 명령어를 실행하면 `tsconfig.json`이 생성됩니다.<br />
 해당 파일을 `TypeScript`을 세팅하는 파일이므로 원하는 부분이 있다면 수정하시면 됩니다.<br />
 
-## 2. 기본 세팅
-### 2.1 app.js ( 진입점 )
+## 1️⃣ 기본 세팅
+### 1. app.js ( 진입점 )
 ```ts
 // ##### app.ts #####
 
@@ -104,7 +104,7 @@ app.listen(app.get("port"), () => {
 });
 ```
 
-### 2.2 type.ts ( 공통으로 사용할 타입을 정의 )
+### 2. type.ts ( 공통으로 사용할 타입을 정의 )
 ```ts
 // ##### type.ts #####
 
@@ -124,7 +124,7 @@ export type ApiResponse<T> = {
 export type ApiErrorResponse = ApiResponse<{}>;
 ```
 
-### 2.3 handler.ts ( 에러 처리 핸들러(미들웨어) )
+### 3. handler.ts ( 에러 처리 핸들러(미들웨어) )
 ```ts
 // ##### handler.ts #####
 
@@ -169,7 +169,7 @@ export const errorHandler: ErrorRequestHandler = (
 };
 ```
 
-### 2.4 router.ts ( router 작성 예시 )
+### 4. router.ts ( router 작성 예시 )
 ```ts
 // ##### router 예시 #####
 
@@ -211,7 +211,7 @@ router.get(
 export default router;
 ```
 
-### 2.5 environment.d.ts ( 환경변수 타입 적용 )
+### 5. environment.d.ts ( 환경변수 타입 적용 )
 ```ts
 // ##### @types/environment.d.ts #####
 
@@ -227,7 +227,7 @@ namespace NodeJS {
 
 위와 같이 파일을 생성하기만 하면 `process.env.KAKAO_API_URL`의 자동 완성과 타입을 지원해줍니다.
 
-## 3. package.json 세팅
+## 2️⃣ package.json 세팅
 ```json
 {
   "scripts": {

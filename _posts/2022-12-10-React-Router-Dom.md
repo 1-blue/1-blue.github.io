@@ -2,7 +2,7 @@
 title: React-Router-Dom V6의 replace
 author: admin
 date: 2022-12-10 19:48:00 +900
-lastmod: 2023-01-15 13:56:00 +900
+lastmod: 2023-02-18 20:27:00 +900
 sitemap:
   changefreq: monthly
   priority: 0.5
@@ -13,10 +13,10 @@ tags: [React-Router-Dom, replace, SPA]
 > `react-router-dom`의 `replace`에 대한 포스트입니다.<br />`state`, `useLocation()`같은 다른 부분들은 다루지 않습니다.
 {: .prompt-info }
 
-## 📌 react-router-dom
+# 🪧 react-router-dom
 `react-router-dom`가 어떤 역할을 하는지 알기 위해서는 `React`의 특징인 `SPA`에 대한 이해가 필요합니다.
 
-### 1. SPA
+## 0️⃣ SPA
 `SinglePageApplication`으로 페이지 이동 대신 `HTML`파일의 내용을 `JS`를 이용해 `DOM`을 변경시키는 것을 말합니다.<br />
 
 일반적인 웹사이트는 각 페이지마다 `HTML`이 존재하고 페이지를 이동할 때마다 `HTML`을 변경합니다.<br />
@@ -25,7 +25,7 @@ tags: [React-Router-Dom, replace, SPA]
 
 `URL`을 변경하면 새로운 `HTML`을 주는 것이 일반적이지만 `SPA`에서는 다르게 처리해야 하므로 그런 처리를 쉽게 해주는 라이브러리가 `react-router-dom`입니다. ( + `react-router` )
 
-## 📌 replace 기능
+## 1️⃣ replace 기능
 웹사이트를 만들다 보면 히스토리에 남기고 싶지 않은 페이지들이 존재합니다.<br />
 저의 경우에는 현재 영화/드라마/도서 관련 웹사이트를 만들고 있습니다.<br />
 검색 기능을 구현하고 있는데 기본 `URL`은 `/search`에 `QueryString`으로 `/search?title=올빼미&category=movie`같은 형식으로 동작합니다.<br />
@@ -34,7 +34,7 @@ tags: [React-Router-Dom, replace, SPA]
 
 이럴 때 `replace`를 사용하면 히스토리에 남기지 않고 페이지 이동이 가능합니다.<br />
 
-## 📌 replace 사용 방법
+## 2️⃣ replace 동작 방식
 > 만약 A, B, C라는 페이지가 존재하고, B라는 페이지의 히스토리를 없애야 하는 경우를 예시로 설명하겠습니다.<br />
 {: .prompt-info }
 

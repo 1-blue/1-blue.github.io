@@ -3,7 +3,7 @@ layout: post
 title: 개인 프로젝트 - blequotes 마무리
 author: admin
 date: 2023-02-05 20:57:00 +900
-lastmod: 2023-02-05 20:57:00 +900
+lastmod: 2023-02-18 20:05:00 +900
 sitemap:
   changefreq: monthly
   priority: 0.5
@@ -42,12 +42,12 @@ tags: [프로젝트, 개인 프로젝트, 명대사]
 1. [`Movie DB API`](https://developers.themoviedb.org/3){:target="_blank"}를 이용한 영화 및 드라마들의 각종 정보 패치 및 검색 
 2. [`Kakao Book API`](https://developers.kakao.com/docs/latest/ko/daum-search/dev-guide#search-book){:target="_blank"}를 이용한 도서 검색
 3. `Image Carousel` ( `react-slick` 사용 )
-4. 명대사 등록 기능 ( `AWS-S3`의 `presignedURL` 기능을 이용한 이미지 등록 ) FIXME: URL 등록
+4. 명대사 등록 기능 ( [`AWS-S3`의 `presignedURL`](https://1-blue.github.io/posts/AWS-S3-presignedURL/){:target="_blank"} 기능을 이용한 이미지 등록 )
 5. 명대사에 좋아요 및 싫어요 기능
 6. 영화 / 드라마 / 도서 검색 기능 ( [`Debouncing`](https://1-blue.github.io/posts/%EB%94%94%EB%B0%94%EC%9A%B4%EC%8B%B1-%EC%93%B0%EB%A1%9C%ED%8B%80%EB%A7%81-%EB%A9%94%EB%AA%A8%EC%9D%B4%EC%A0%9C%EC%9D%B4%EC%85%98/#%EF%B8%8F-%EB%94%94%EB%B0%94%EC%9A%B4%EC%8B%B1--debouncing-){:target="_blank"} 사용 )
 7. 무한 스크롤링 ( [`Intersection-Observer`](https://1-blue.github.io/posts/Intersection-Observer-API/){:target="_blank"} 사용 )
-8. `React-ToolKit`을 이용한 전역 상태 관리
-9. [`Prisma`](https://1-blue.github.io/posts/prisma/)를 이용한 `DB`관리 및 데이터 관리
+8. [`React-ToolKit`](https://1-blue.github.io/posts/Redux-Toolkit/){:target="_blank"}을 이용한 전역 상태 관리
+9. [`Prisma`](https://1-blue.github.io/posts/prisma/){:target="_blank"}를 이용한 `DB`관리 및 데이터 관리
 
 # 🍀 제작 환경
 1. OS: `Window11`
@@ -193,6 +193,7 @@ _게시글 생성_
 5. [`Node.js` + `TypeScript` 세팅 방법](https://1-blue.github.io/posts/Setting-NodeJs/){:target="_blank"}
 6. [`Intersection-Observer-API`와 무한 스크롤링](https://1-blue.github.io/posts/Intersection-Observer-API/){:target="_blank"}
 7. [`prisma` 사용법 정리](https://1-blue.github.io/posts/prisma/){:target="_blank"}
+8. [`React-ToolKit` + `TypeScript` + `React` 사용 방법](https://1-blue.github.io/posts/Redux-Toolkit/){:target="_blank"}
 
 # 📮 레퍼런스
 1. [`React` 배포 방법](https://create-react-app.dev/docs/deployment/){:target="_blank"}
