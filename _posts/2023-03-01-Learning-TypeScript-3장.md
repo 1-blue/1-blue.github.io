@@ -3,7 +3,7 @@ layout: post
 title: 러닝 타입스크립트 3장
 author: admin
 date: 2023-03-01 18:01:00 +900
-lastmod: 2023-03-01 18:01:00 +900
+lastmod: 2023-03-08 19:29:00 +900
 sitemap:
   changefreq: monthly
   priority: 0.5
@@ -16,7 +16,7 @@ image:
   alt: 러닝 타입스크립트 교재 이미지
 ---
 
-> 해당 포스트는 `러닝 타입스크립트` 3장을 읽고 정리한 포스트입니다.<br />책의 모든 내용을 작성하는 것이 아닌 주관적인 기준에 따라 필요한 정보만 정리했습니다.<br />
+> 해당 포스트는 `러닝 타입스크립트` 3장을 읽고 정리한 포스트입니다.<br />
 {: .prompt-info}
 
 # 🧬 유니언 ( union )
@@ -41,8 +41,19 @@ myValue2.toFixed(); // "number"만 갖고 있는 메서드
 
 # 🛤️ 내로잉 ( narrowing )
 값에 허용된 타입들(유니언)을 좁히는 것을 의미합니다.<br />
+즉, 여러 타입들중에서 더 구체적인 타입인 것을 타입 체커에게 알려주는 것입니다.<br />
 
-## 0️⃣ 조건 검사를 통한 내로잉
+## 0️⃣ 값 할당을 통한 내로잉
+유니온 타입의 경우 값 할당을 통해서 타입을 좁힐 수 있습니다.<br />
+
+```ts
+let myValue: number | string = "Aarox";
+
+// Error: Property 'toFixed' does not exist on type 'string'.
+myValue.toFixed();
+```
+
+## 1️⃣ 조건 검사를 통한 내로잉
 조건문을 통해서 유니온 타입을 좁힐 수 있습니다.<br />
 
 ```ts
@@ -60,7 +71,7 @@ if (myValue === "Aatrox") {
 }
 ```
 
-## 1️⃣ typeof 검사를 통한 내로잉
+## 2️⃣ typeof 검사를 통한 내로잉
 `typeof` 연산자를 이용하면 조금 더 넓게 타입을 좁힐 수 있습니다.<br />
 단순한 조건 검사를 통한 내로잉보다 더 범용적으로 사용하는 방법입니다.<br />
 
@@ -79,7 +90,7 @@ if (typeof myValue === "string") {
 }
 ```
 
-## 2️⃣ truty/falsy 내로잉
+## 3️⃣ 논리 연산자를 통한 내로잉
 `if`, `&&`, `||`, 삼항 연산자 등을 이용해서 `falsy`한 값을 제외한 내로잉이 가능합니다.<br />
 
 ```ts
@@ -116,12 +127,14 @@ if (myValue) {
 
 # 💀 리터럴 타입 ( literal type )
 원시 타입중 하나가 아닌 특정 원싯값으로 알려진 타입을 의미합니다.<br />
-즉, `string`이 아닌 `"Aatrox"`라는 구체적인 타입을 리터럴 타입이라고 합니다.<br />
+즉, `string`이 아닌 `"Aatrox"`, `10` 등의 구체적인 타입을 리터럴 타입이라고 합니다.<br />
+( `string`, `number` 같은 원시 타입은 해당 타입의 모든 리터럴 타입의 집합체입니다. )<br />
 
 ```ts
 // myValue: "Aatrox"
 const myValue = "Aatrox";
 ```
+
 
 ## 0️⃣ 리터럴 타입 할당 가능성
 동일한 원시 타입이라고 하더라도 서로 다른 리터럴 타입이라면 할당이 불가능합니다.<br />
@@ -146,21 +159,59 @@ myValue2 = myValue1; // string => "Aatrox"
 
 # ⛑️ 엄격한 null 검사
 모든 타입에 `null`과 `undefined`를 허용할지 여부를 결정하는 것입니다.<br />
+
+## 0️⃣ strictNullChecks
 `strictNullChecks` 옵션을 이용해서 설정할 수 있습니다.<br />
 ( 엄격하게 `null`을 검사하는 것이 더 모범적이라고 합니다. )<br />
+
+`strictNullChecks: false`로 설정하면 모든 타입에 `| null | undefined`가 추가된 것처럼 동작합니다.<br />
+
++ `tsconfig.json`
+
+```json
+{
+  "compilerOption": {
+    "strictNullChecks": true, /* When type checking, take into account null and undefined */
+    // ... 생략
+  }
+}
+```
+
+아래 예시는 `null` 체크 여부에 `null`을 넣었을 때의 결과입니다.<br />
 
 ```ts
 let myValue: string;
 
 // strictNullChecks: true
 myValue = null; // Error: Type 'null' is not assignable to type 'string'.
+myValue = undefined; // Error: Type 'undefined' is not assignable to type 'string'.
 
 // strictNullChecks: false
 myValue = null; // 문제 없음
+myValue = undefined; // 문제 없음
+```
+
+## 1️⃣ 초깃값이 없는 변수
+초깃값을 넣어주지 않은 변수라면 타입이 정해져 있더라도 타입 체커가 인지하고 타입 에러를 띄워줍니다.<br />
+
+```ts
+let myValue1: string;
+
+// Error: Variable 'myValue1' is used before being assigned.
+myValue1.length;
+// Error: Variable 'myValue1' is used before being assigned.
+myValue1?.length;
+
+let myValue2: string | undefined;
+
+// Error: Variable 'myValue2' is used before being assigned.
+myValue2.length;
+// 정상 동작
+myValue2?.length;
 ```
 
 # ⛳ 타입 별칭
-`type` 키워드를 이용해서 타입에 대한 변수를 생성할 수 있습니다.<br />
+`type` 키워드를 이용해서 타입에 대한 변수인 타입 별칭을 생성할 수 있습니다.<br />
 
 ```ts
 type MyValue = string | number;
@@ -168,6 +219,7 @@ type MyValue = string | number;
 let myValue: MyValue = "Aatrox";
 ```
 
+## 0️⃣ 타입 별칭은 TypeScript만의 문법
 타입 별칭은 `JavaScript`에 존재하지 않습니다.<br />
 즉, 컴파일하고 나면 사라집니다. ( 런타임에 존재하지 않음 )<br />
 
@@ -180,14 +232,13 @@ let myValue = "Aatrox";
 ```
 
 타입 별칭은 유니온 / 인터섹션 등으로 결합될 수 있습니다.<br />
-여기서 중요한 점은 `NewValue`가 `MyValue`를 참조하기 때문에 `MyValue`가 변하면 `NewValue`도 동기화 된다는 점입니다.<br />
+여기서 중요한 점은 `MyValueWithNumber`가 `MyValue`를 참조하기 때문에 `MyValue`가 변하면 `MyValueWithNumber`도 동기화 된다는 점입니다.<br />
 
 ```ts
 type MyValue = string | undefined;
 
-// type NewValue = MyValue | number;
-// 즉, type NewValue = number | string | undefined
-type NewValue = MyValue | number;
+// 즉, "type MyValueWithNumber = number | string | undefined"
+type MyValueWithNumber = MyValue | number;
 ```
 
 # ❓ 의문
@@ -197,10 +248,11 @@ type NewValue = MyValue | number;
 활성화해야 `null` 체크를 엄격하게 하기 때문에 `null`을 따로 추가해줘야 변수에 할당할 수 있는 것이 맞지 않나요...?<br />
 
 ## 1️⃣ 타입 내로잉
-[타입 내로잉](https://tsplay.dev/w1Eq8w){:target="_blank"}에서는 왜 `falsy`한 값을 제대로 추론하지 않을까요...?<br />
+~~[타입 내로잉](https://tsplay.dev/wXO6kW){:target="_blank"}에서는 왜 `falsy`한 값을 제대로 추론하지 않을까요...?~~<br />
+
+`string`에는 `falsy`한 값인 `""`가 들어있기 때문에 `else`에서 `"" | undefined`라서 `string | undefined`로 추론하는 것 같네요 🥲<br />
 
 ```ts
-// declare let myValue: string | undefined;
 let myValue = Math.random() > 0.5 ? "Aatrox" : undefined;
 
 if (myValue) {
@@ -209,6 +261,15 @@ if (myValue) {
 } else {
   // myValue: string | undefined
   myValue; // Q: 왜 "" | undefined로 추론하지 않을까??
+}
+
+// 아래 코드는 제대로 추론함
+if (typeof myValue === "string") {
+  // myValue: string
+  myValue.toUpperCase();
+} else {
+  // myValue: undefined
+  myValue;
 }
 ```
 
