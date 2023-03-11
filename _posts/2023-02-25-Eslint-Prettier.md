@@ -3,12 +3,12 @@ layout: post
 title: ESLint & Prettier
 author: admin
 date: 2023-02-25 16:49:00 +900
-lastmod: 2023-02-25 16:49:00 +900
+lastmod: 2023-03-11 19:29:00 +900
 sitemap:
   changefreq: monthly
   priority: 0.5
-categories: [Common, ESLint/Prettier]
-tags: [ESLint, Prettier]
+categories: [Common, Eslint/Prettier]
+tags: [Eslint, Prettier]
 ---
 
 > 해당 포스트는 `Eslint`와 `Prettier`에 대한 포스트입니다.<br />
@@ -58,7 +58,6 @@ npm i -D eslint-plugin-import
 
 + `airbnb`: `airbnb`의 규칙 적용
 + `plugin:import/recommended`: `ES6` 모듈 시스템 규칙 적용
-
 
 ### 1. env
 코드를 실행하는 환경마다 갖고 있는 전역변수들이 다릅니다.<br />
@@ -176,7 +175,7 @@ npm i -D eslint-config-prettier eslint-plugin-prettier
 
 + `plugin:prettier/recommended`: `eslint-plugin-prettier`의 설정 적용
 
-# 마무리
+# 🐣 마무리
 여러 문서와 포스트를 찾아보면서 설정을 했는데 이게 제대로 동작하는 건지 아닌 건지 확신이 안 들어서 제대로 정리한 것인지도 잘 모르겠네요... 🥲<br />
 
 일단 얼마후에 팀 프로젝트를 할 예정이라 미리 기본 세팅 방법들에 대해 공부해보고 있어서 아직 적용을 해보지 못한 상태입니다.<br />
