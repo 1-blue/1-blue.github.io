@@ -85,6 +85,7 @@ _Git-Flow_
 ## 6️⃣ 주의 사항
 1. 모든 브랜치를 병합할 때는 항상 브랜치 병합 커밋 이력을 남겨야 추적을 할 수 있기 때문에 [`--no-ff`](/posts/Git-GitHub/#1%EF%B8%8F⃣9%EF%B8%8F⃣-git-merge-branch-name){:target="_blank"} 옵션을 사용해서 병합해야합니다.<br />
 2. `PR`에 대한 규칙을 협의 후 정해둬야 합니다. ( 몇 명의 승인이 있어야 `PR`할지 등 )
+3. 첫 커밋 시 태그 등록 / `master`와 병합하는 경우 태그 등록하기
 
 # 🫗 GitHub Flow
 `GitHub Flow`란 `Git`을 이용하여 개발을 진행하는 전략 중에 하나입니다.<br />

@@ -7,7 +7,7 @@ lastmod: 2023-01-20 07:22:00 +900
 sitemap:
   changefreq: monthly
   priority: 0.5
-categories: [ComputerScience, Compiler/InterPreter]
+categories: [ComputerScience, Compiler/Interpreter]
 tags: [compile, interpreter, transpile]
 ---
 

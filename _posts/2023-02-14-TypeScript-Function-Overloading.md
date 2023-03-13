@@ -40,7 +40,7 @@ function func(x: string): string;
 function func(x: number): number;
 function func(x: boolean): boolean;
 
-function func(x: string | number) {
+function func(x: string | number | boolean) {
   return x;
 }
 ```
