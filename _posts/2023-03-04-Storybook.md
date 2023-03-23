@@ -130,7 +130,7 @@ module.exports = config;
 
 + `preview.tsx`
 
-```js
+```tsx
 import React from "react";
 import { ThemeProvider } from "styled-components";
 
@@ -171,6 +171,19 @@ export const parameters = {
       color: /(background|color)$/i,
       date: /Date$/,
     },
+  },
+
+  /** 상단 nav에서 백그라운드 색상 선택에 제공할 옵션 */
+  backgrounds: {
+    /** 기본 배경 */
+    default: "gray",
+
+    /** 색상 옵션 */
+    values: [
+      { name: "light", value: "#FFF" },
+      { name: "gray", value: "#888" },
+      { name: "dark", value: "#000" },
+    ],
   },
 };
 ```
