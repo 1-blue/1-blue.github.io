@@ -262,28 +262,29 @@ if ("age" in person) {
 ```
 
 ## 2️⃣ 판별된 유니온
-판별된 유니온을 이용해서 타입 내로잉을 하는 것이 좋습니다.<br />
+> [판별된 유니온](/posts/Learning-TypeScript-4장/#2%EF%B8%8F⃣-판별된-유니온){:target="_blank"}이란 각 객체마다 각자의 태그를 붙여서 해당 태그로 타입을 구분할 수 있도록 판별하는 것을 의미합니다.<br />
+{:.prompt-info}
 
-판별된 유니온이란 각 객체마다 각자의 태그를 붙여서 해당 태그로 타입을 구분할 수 있도록 판별하는 것을 의미합니다.<br />
+판별된 유니온을 이용해서 타입 내로잉을 하는 것이 좋습니다.<br />
 
 ```ts
 type Person1 = {
+  type: "person1";
   name: string;
   age: number;
-  type: "person1";
 };
 type Person2 = {
+  type: "person2";
   name: string;
   gender: boolean;
-  type: "person2";
 };
 
 let person: Person1 | Person2;
 
 person =
   Math.random() > 0.5
-    ? { name: "AA", age: 2, type: "person1" }
-    : { name: "BB", gender: true, type: "person2" };
+    ? { type: "person1", name: "AA", age: 2 }
+    : { type: "person2", name: "BB", gender: true };
 
 if (person.type === "person1") {
   person.age;
@@ -359,4 +360,5 @@ type T = T1 & T2;
 # 📮 레퍼런스
 1. « 러닝 타입스크립트 4장 » ( 조시 골드버그 지음, 고승원 옮김, 한빛미디어, 2023 )
 
-1. [1- blue - 구조적 타이핑](/posts/이펙티브-타입스크립트-1장/#-item-4--구조적-타이핑에-익숙해지기-){:target="_blank"}
+1. [1-blue - 판별된 유니온](/posts/Learning-TypeScript-4장/#2%EF%B8%8F⃣-판별된-유니온){:target="_blank"}
+1. [1-blue - 구조적 타이핑](/posts/이펙티브-타입스크립트-1장/#-item-4--구조적-타이핑에-익숙해지기-){:target="_blank"}
