@@ -3,7 +3,7 @@ layout: post
 title: 러닝 타입스크립트 15장 ( 타입 운영 )
 author: admin
 date: 2023-04-16 21:36:00 +900
-lastmod: 2023-04-16 21:36:00 +900
+lastmod: 2023-04-20 10:26:00 +900
 sitemap:
   changefreq: monthly
   priority: 0.5
@@ -16,7 +16,7 @@ image:
   alt: 러닝 타입스크립트 교재 이미지
 ---
 
-> 해당 포스트는 `러닝 타입스크립트` 14장을 읽고 정리한 포스트입니다.<br />책의 모든 내용을 작성하는 것이 아닌 주관적인 기준에 따라 필요한 정보만 정리했습니다.<br />
+> 해당 포스트는 `러닝 타입스크립트` 15장을 읽고 정리한 포스트입니다.<br />책의 모든 내용을 작성하는 것이 아닌 주관적인 기준에 따라 필요한 정보만 정리했습니다.<br />
 {: .prompt-info}
 
 # 🧩 매핑된 타입
@@ -41,7 +41,7 @@ type Animal = {
 ```
 
 ## 0️⃣ 타입에서 매핑된 타입
-`keyof`를 사용해서 특정 타입의 `key`를 뽑아와서 매핑된 타입에 사용할 수 있습니다.<br />
+[`keyof`](/posts/Learning-TypeScript-9장/#0%EF%B8%8F⃣-keyof){:target="_blank"}를 사용해서 특정 타입의 `key`를 뽑아와서 매핑된 타입에 사용할 수 있습니다.<br />
 
 ```ts
 interface Animals {
@@ -63,7 +63,7 @@ type AnimalCopy = {
 ```
 
 매핑된 타입을 사용하면 메서드를 모두 속성 구문으로 바꿀 수 있습니다.<br />
-클래스에 구현하지 않는 이상 두 구문의 차이는 없는 것으로 알고 있습니다.<br />
+( 클래스에 구현하지 않는 이상 두 구문의 차이는 없는 것으로 알고 있습니다. )<br />
 
 + 메서드 구문: `func(): void` ( 객체들끼리 공유하는 메서드 )
 + 속성 구문: `func: () => void` ( 각 객체가 독립적으로 갖는 메서드 )
@@ -86,6 +86,21 @@ type Func = JustProperties<Funcs>;
  *   func2: () => void;
  * }
  */
+```
+
+위처럼 동작하는 이유는 메서드 속성을 꺼내서 사용하면 아래와 같이 속성 구문으로 변환되기 때문입니다.<br />
+
+```ts
+interface Funcs {
+  func1(): void;
+  func2: () => void;
+}
+
+// F1 = () => void
+type F1 = Funcs["func1"];
+
+// F2 = () => void
+type F2 = Funcs["func2"];
 ```
 
 ## 1️⃣ 제한자 변경 & 제네릭 매핑된 타입
@@ -161,10 +176,10 @@ type MyExcludeOptionalType = ExcludeOptional<MyExcludeReadonlyType>;
 const s = "s";
 const n = 0;
 
-// MyType1 = string
-type MyType1 = (typeof s) extends string ? string : number;
-// MyType2 = number
-type MyType2 = (typeof n) extends string ? string : number;
+// MyType1 = true
+type MyType1 = (typeof s) extends string ? true : false;
+// MyType2 = false
+type MyType2 = (typeof n) extends string ? true : false;
 ```
 
 ## 0️⃣ 제네릭 조건부 타입
@@ -196,7 +211,7 @@ type MyType1 = MakeCallable<typeof f>;
 type MyType2 = MakeCallable<typeof s>;
 ```
 
-아래는 특정 타입을 제외하는 utility의 `Exclude<T, U>`와 `Omit<T, U>`에 대한 정의입니다.<br />
+아래는 특정 타입을 제외하는 `Utility Types`의 `Exclude<T, U>`와 `Omit<T, U>`에 대한 정의입니다.<br />
 제네릭 조건부 타입을 사용하기도 하고 처음 두 개를 사용하면 둘의 사용 목적이 헷갈리기 때문에 내용에 추가했습니다.<br />
 
 ```ts
@@ -230,6 +245,7 @@ type MyUser = Omit<User, "age">;
 
 ## 1️⃣ 타입 분산과 분산 조건부 타입
 > [inpa - 조건부 타입과 분산 조건부 타입](https://inpa.tistory.com/entry/TS-%F0%9F%93%98-%ED%83%80%EC%9E%85%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8-%EC%A1%B0%EA%B1%B4%EB%B6%80-%ED%83%80%EC%9E%85-%EC%99%84%EB%B2%BD-%EC%9D%B4%ED%95%B4%ED%95%98%EA%B8%B0){:target="_blank"}를 참고하시면 매우 도움이 됩니다. 🙂<br />
+{:.prompt-tip}
 
 조건부 타입은 제네릭의 유무에 따라서 동일하게 생긴 형태에 대한 결과가 다르게 나옵니다.<br />
 `(1)`과 `(2)`는 제네릭의 차이를 제외하고는 동일한 형태의 조건부 타입입니다.<br />
@@ -307,6 +323,11 @@ type Funcs = MakeFunc<{
 ```
 
 # 🪀 never
+일반적으로 `never` 타입은 아무것도 가질 수 없는 타입입니다.<br />
+반환을 하지 않는 즉, 예외를 던지는 함수의 반환 타입으로 사용할 수 있습니다.<br />
+
+하지만 `never`가 유니언(`|`)과 결합되면 **해당 값이 무시되는 기능**을 합니다.<br />
+이 기능을 이용해서 특정 값을 제외시키는데 활용할 수 있습니다.<br />
 
 ## 0️⃣ never와 교차, 유니언 타입
 교차 타입(`&`)은 모두 `never`로 만들고, 유니언 타입(`|`)은 모두 유니언 대상인 타입으로 만듭니다.<br />
@@ -320,18 +341,21 @@ type MyType2 = never | string;
 ```
 
 ## 1️⃣ never과 조건부 타입
+> 아래 코드가 명확하게 이해가 안 간다면 [inpa - 조건부 타입과 분산 조건부 타입](https://inpa.tistory.com/entry/TS-%F0%9F%93%98-%ED%83%80%EC%9E%85%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8-%EC%A1%B0%EA%B1%B4%EB%B6%80-%ED%83%80%EC%9E%85-%EC%99%84%EB%B2%BD-%EC%9D%B4%ED%95%B4%ED%95%98%EA%B8%B0){:target="_blank"}을 참고해주세요!<br />
+{:.prompt-tip}
+
 `never`은 유니언에서 무시되기 때문에 `never`과 조건부 타입을 같이 사용하면 `never`에 해당하는 것은 결과에 포함하지 않습니다.<br />
 ( `Parameters<F>`에도 조건부 타입에 `never`를 사용합니다. )<br />
 
 ```ts
 type OnlyStrings<T> = T extends string ? T : never;
 
-// MyType2 = "a" | "b"
-type MyType1 = OnlyStrings<"a" | "b" | 10 | true>;
-// MyType2 = "x"
-type MyType2 = "a" | "b" extends string ? "x" : never;
-// MyType3 = never
-type MyType3 = "a" | "b" | 10 | true extends string ? "x" : never;
+// MyType1 = "x"
+type MyType1 = "a" | "b" extends string ? "x" : never;
+// MyType2 = never
+type MyType2 = "a" | "b" | 10 | true extends string ? "x" : never;
+// MyType3 = "a" | "b"
+type MyType3 = OnlyStrings<"a" | "b" | 10 | true>;
 ```
 
 ## 2️⃣ never와 매핑된 타입
@@ -355,6 +379,7 @@ interface Person {
  *   name: "name";
  *   age: never;
  *   gender: never;
+ *   aa: "aa"
  * }
  */
 type MyType1 = OnlyStringProperties<Person>;
@@ -445,7 +470,7 @@ type MyType = {
 ```ts
 const fruits = {
   apple: 300,
-  banan: 200,
+  banana: 200,
   melon: 100,
 };
 
@@ -455,7 +480,7 @@ type Fruits = {
 /**
  * type Fruits = {
  *   myApple: Promise<number>;
- *   myBanan: Promise<number>;
+ *   myBanana: Promise<number>;
  *   myMelon: Promise<number>;
  * }
  */
@@ -482,3 +507,5 @@ type MyValue2<T> = {
 1. « 러닝 타입스크립트 15장 » ( 조시 골드버그 지음, 고승원 옮김, 한빛미디어, 2023 )
 
 1. [inpa - 조건부 타입과 분산 조건부 타입](https://inpa.tistory.com/entry/TS-%F0%9F%93%98-%ED%83%80%EC%9E%85%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8-%EC%A1%B0%EA%B1%B4%EB%B6%80-%ED%83%80%EC%9E%85-%EC%99%84%EB%B2%BD-%EC%9D%B4%ED%95%B4%ED%95%98%EA%B8%B0){:target="_blank"}
+
+1. [1-blue - keyof](/posts/Learning-TypeScript-9장/#0%EF%B8%8F⃣-keyof){:target="_blank"}
