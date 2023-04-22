@@ -3,7 +3,7 @@ layout: post
 title: blegram - 간단한 구현
 author: admin
 date: 2023-04-13 21:16:00 +900
-lastmod: 2023-04-14 23:27:00 +900
+lastmod: 2023-04-22 01:35:00 +900
 sitemap:
   changefreq: monthly
   priority: 0.5
@@ -252,6 +252,47 @@ const Post = () => {
 };
 
 export default Post;
+```
+
+## 🫧 이벤트 버블링
+> 아래 코드는 실제 코드가 아닌 dataset과 버블링을 활용해서 이벤트를 하나만 사용하는 예시입니다.<br />실제 코드가 보고 싶다면 [`PostComments`의 `onDeleteComment()`](https://github.com/1-blue/blegram/tree/master/src/components/Post/PostComments/index.tsx){:target="_blank"}와 [`PostComment`의 삭제 버튼(`data-idx`)](https://github.com/1-blue/blegram/tree/master/src/components/Post/PostComment/index.tsx){:target="_blank"}을 참고해주세요!<br />
+{:.prompt-info}
+
+
+댓글의 삭제 기능을 구현하는데 이벤트 버블링과 `datset`을 활용했습니다.<br />
+
+원래는 각 버튼에 `onClick`으로 댓글을 삭제하는 버튼을 모두 `props`로 내리는 것이 아닌 모든 댓글을 갖는 컴포넌트 하나에 `onClick`을 달고 `dataset`으로 해당 댓글의 식별자를 얻어서 처리하면 하나의 `onClick` 이벤트를 이용해서 모든 댓글 삭제에 대한 이벤트를 처리할 수 있습니다.<br />
+
+```tsx
+import { useCallback } from "react";
+
+const comments = Array(20)
+  .fill(null)
+  .map((v, i) => ({ idx: i }));
+
+const Component = () => {
+  const onClick: React.MouseEventHandler<HTMLUListElement> = useCallback(
+    (e) => {
+      if (!(e.target instanceof HTMLButtonElement)) return;
+
+      // 1, 2, 3, 4, 5 ... ( "dataset"을 이용해서 하나의 이벤트 핸들러 함수로 각 댓글을 구별할 수 있습니다. )
+      console.log(e.target.dataset.idx);
+    },
+    []
+  );
+
+  return (
+    <ul onClick={onClick}>
+      {comments.map((comment) => (
+        <li key={comment.idx}>
+          <button type="button" data-idx={comment.idx}>
+            삭제
+          </button>
+        </li>
+      ))}
+    </ul>
+  );
+};
 ```
 
 ## 📮 레퍼런스
