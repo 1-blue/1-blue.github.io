@@ -126,7 +126,7 @@ const Carousel: React.FC<Props> = ({ photos }) => (
 export default Carousel;
 ```
 
-## 🚟 게시글 전역 모달
+## 🚟 전역 모달
 전역 모달을 위해서 `recoil`을 이용했습니다.<br />
 
 모달마다 각자의 레이아웃이 있기 때문에 각각의 모달마다 서로 다른 `atom`과 레이아웃을 세트로 만들려고 합니다.<br />
@@ -138,52 +138,66 @@ export default Carousel;
 ```ts
 import { atom } from "recoil";
 
-interface ModalAtom {
+interface AtomModalOfPost {
   isOpen: boolean;
   isMine: boolean;
   postIdx: null | number;
 }
-
-export const modalAtom = atom<ModalAtom>({
-  key: "modalAtom",
+/** 2023/04/14 - post modal atom - by 1-blue */
+export const atomModalOfPost = atom<AtomModalOfPost>({
+  key: "AtomModalOfPost",
   default: {
     isOpen: false,
     isMine: false,
     postIdx: null,
   },
 });
+
+interface AtomModalOfLiker {
+  isOpen: boolean;
+  postIdx: null | number;
+}
+/** 2023/04/25 - liker modal atom - by 1-blue */
+export const atomModalOfLiker = atom<AtomModalOfLiker>({
+  key: "AtomModalOfLiker",
+  default: {
+    isOpen: false,
+    postIdx: null,
+  },
+});
+
 ```
 
-+ [`/src/hooks/recoil/useModalOfPost.ts`](https://github.com/1-blue/blegram/tree/master/src/hooks/recoil/useMpdalOfPost.ts){:target="_blank"}
++ [`/src/hooks/recoil/usePostModal.ts`](https://github.com/1-blue/blegram/tree/master/src/hooks/recoil/usePostModal.ts){:target="_blank"}
 
 ```ts
 import { useCallback } from "react";
 import { useRecoilState } from "recoil";
 
 // atom
-import { modalAtom } from "@src/recoil/atoms";
+import { atomModalOfPost } from "@src/recoil/atoms";
 
-/** 2023/04/14 - 전역 모달 훅 - by 1-blue */
-const useModalOfPost = () => {
-  const [modalData, setModalData] = useRecoilState(modalAtom);
+/** 2023/04/14 - 전역 게시글 모달 훅 - by 1-blue */
+const usePostModal = () => {
+  const [postModalData, setPostModalData] = useRecoilState(atomModalOfPost);
 
   /** 2023/04/14 - 모달 닫기 핸들러 - by 1-blue */
-  const closeModal = useCallback(
-    () => setModalData((prev) => ({ ...prev, isOpen: false })),
-    [setModalData]
+  const closePostModal = useCallback(
+    () => setPostModalData((prev) => ({ ...prev, isOpen: false })),
+    [setPostModalData]
   );
 
   /** 2023/04/14 - 모달 열기 핸들러 - by 1-blue */
-  const openModal = useCallback(
+  const openPostModal = useCallback(
     (isMine: boolean, postIdx: number) =>
-      setModalData((prev) => ({ ...prev, isOpen: true, isMine, postIdx })),
-    [setModalData]
+      setPostModalData((prev) => ({ ...prev, isOpen: true, isMine, postIdx })),
+    [setPostModalData]
   );
 
-  return { modalData, closeModal, openModal };
+  return { postModalData, closePostModal, openPostModal };
 };
 
-export default useModalOfPost;
+export default usePostModal;
 ```
 
 + [`/src/components/common/Modal/Post/index.tsx`](https://github.com/1-blue/blegram/tree/master/src/components/common/Modal/Post/index.tsx){:target="_blank"}
@@ -293,6 +307,56 @@ const Component = () => {
     </ul>
   );
 };
+```
+
+## 🛝 모달 오픈 시 외부 스크롤 금지
+모달이 열려있는지 여부에 의해서 `body`의 `overflow`에 `hidden` or `auto`를 주면 됩니다.<br />
+
++ [`/src/components/Post/index.tsx`](https://github.com/1-blue/blegram/tree/master/src/components/src/components/Post/index.tsx){:target="_blank"}
+
+```tsx
+// 특정 컴포넌트 내부
+
+/** 2023/04/25 - 외부 스크롤 금지 - by 1-blue */
+useEffect(() => {
+  // 모달이 열려있다면
+  if (postModalData.isOpen || likerModalData.isOpen) {
+    document.body.style.overflow = "hidden";
+  }
+  // 모달이 닫혀있다면
+  else {
+    document.body.style.overflow = "auto";
+  }
+}, [postModalData, likerModalData]);
+```
+
+## 🚪 모달 외부 클릭 시 닫기
+모달은 어디든 배치될 수 있기 때문에 이벤트 버블링을 활용해서 `window`에 이벤트를 등록하고, 모달이 닫히면 이벤트를 해제하도록 코드를 구성했습니다.<br />
+그리고 등록한 이벤트에서 `Node.contain()`을 이용해서 현재 클릭한 엘리먼트가 모달 내부에 존재하는지 확인하고 모달을 닫거나 열도록 로직을 구성했습니다.<br />
+
++ [`/src/components/Post/index.tsx`](https://github.com/1-blue/blegram/tree/master/src/components/src/components/Post/index.tsx){:target="_blank"}
+
+```tsx
+// 특정 컴포넌트 내부
+
+/** 2023/04/25 - 외부 클릭 시 모달 닫기 - by 1-blue */
+useEffect(() => {
+  const modalCloseHandler = (e: MouseEvent) => {
+    if (!likerModalData.isOpen) return;
+    if (!(e.target instanceof HTMLElement)) return;
+    if (e.target instanceof HTMLButtonElement) return;
+    if (!modalRef.current) return;
+    // 위쪽은 부가적인 부분이라 수정/삭제를 해도 되고 아래 부분이 핵심
+    // 현재 클릭한 엘리먼트가 모달의 내부에 존재하는 엘리먼트인지 확인
+    if (modalRef.current.contains(e.target)) return;
+
+    // 모달을 닫는 함수
+    closeLikerModal();
+  };
+
+  window.addEventListener("click", modalCloseHandler);
+  return () => window.removeEventListener("click", modalCloseHandler);
+}, [likerModalData, closeLikerModal]);
 ```
 
 ## 📮 레퍼런스
