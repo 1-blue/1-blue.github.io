@@ -113,7 +113,9 @@ export default rootReducer;
 `immer`는 내부적으로 돌아가기 때문에 아래 예시를 테스트하려면 설치해야 합니다.<br />
 
 원래 `Redux`의 `state`를 변경할 때는 기존 값과 비교를 위해 원본을 수정하는 행위(`(1)`)를 하면 안됩니다.<br />
-하지만 `immer`를 사용하면 `(2)`처럼 원본을 수정하는 행위를 해도 내부적으로 불변성을 유지하도록 조작해줍니다.<br />
+즉, `(2)`처럼 기존 데이터는 그대로 두고 새로운 데이터를 수정한 값을 상태 변경 함수에 넘겨줘야 합니다.<br />
+
+하지만 `immer`를 사용하면 `(3)`처럼 원본을 수정하는 행위를 해도 내부적으로 불변성을 유지하도록 조작해줍니다.<br />
 ( `Array.prototype.push` 같은 메서드를 사용해도 됩니다. )<br />
 
 아직 `immer`에 대해 제대로 알지는 못하기 때문에 설명은 여기까지만 적겠습니다.<br />
@@ -122,10 +124,12 @@ export default rootReducer;
 ```ts
 import produce from "immer";
 
-const state = { count: 1 };
+const [state, setState] = useState({ count: 1 });
 
 // (1)
-// state.count += 1;
+state.count += 1;
+// (2)
+setState(prev => ({ ...prev, count: prev.count + 1 }));
 
 // (2)
 const increase = produce(state, draft => {
@@ -188,12 +192,12 @@ import { createSelector } from "@reduxjs/toolkit";
 import store from "../configureStore";
 
 /** "store"에서 필요한 "state" 선택 */
-const getToDos = (myStore: ReturnType<typeof store.getState>) => {
+const getTodos = (myStore: ReturnType<typeof store.getState>) => {
   return myStore.todo;
 };
 
 /** 선택한 "state"에서 메모이제이션할 값 선택 ( 캐싱 ) */
-export const getToDoList = createSelector(getToDos, (todos) => {
+export const getTodoList = createSelector(getTodos, (todos) => {
   // 테스트용 ( 정상적으로 동작한다면 즉, 메모이제이션 된다면 초기와 "todos"가 바뀌는 경우를 제외하고 콘솔이 호출되지 않음 )
   console.log("메모이제이션 안됨!!!");
 
@@ -201,7 +205,7 @@ export const getToDoList = createSelector(getToDos, (todos) => {
 });
 
 // 특정 컴포넌트에서 아래와 같이 사용
-const { todos } = useSelector(getToDoList);
+const { todos } = useSelector(getTodoList);
 ```
 
 ## 6️⃣ 타입 적용하기 ( dispatch, selector )
@@ -260,6 +264,10 @@ const counterSlice = createSlice({
       state.count -= action.payload;
     },
   },
+  // 비동기적인 처리를 하는 부분
+  extraReducers(builder) {
+    // ...
+  },
 });
 
 // 아래 값을 이용해서 "Action"을 생성
@@ -312,9 +320,9 @@ type ApiFetchUserHandler = (
 
 // =================== api 요청 함수 ===================
 const apiFetchUsers: ApiFetchUsersHandler = async () =>
-  (await fetch(`https://jsonplaceholder.typicode.com/users`)).json();
+  fetch(`https://jsonplaceholder.typicode.com/users`).then((res) => res.json());
 const apiFetchUser: ApiFetchUserHandler = async ({ id }) =>
-  (await fetch(`https://jsonplaceholder.typicode.com/users/${id}`)).json();
+  fetch(`https://jsonplaceholder.typicode.com/users`).then((res) => res.json());
 
 // "createAsyncThunk"의 예외로 사용할 타입
 type CreateAsyncThunkErrorType = { rejectValue: { message: string } };

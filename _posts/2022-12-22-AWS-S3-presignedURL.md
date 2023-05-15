@@ -16,6 +16,8 @@ image:
 > 해당 포스트는 `TypeScript`로 `AWS-S3`와 `presignedURL`를 사용하는 방법에 대한 포스트입니다.
 {: .prompt-info}
 
+TODO: .env, 엑세스 키 생성 방법, 제거, 복사, 이동
+
 # 🔑 ACCESS_KEY, ACCESS_SECRET_KEY 구하기
 두 개의 키들은 `JS`(`TS`)로 `S3`에 접근할 때 식별하기 위해 사용하는 `Key`입니다.<br />
 
@@ -133,7 +135,7 @@ const convertS3ImagePath = (name: string) => {
 /**
  * S3의 "preSignedURL"을 생성하는 함수
  * @param name 이미지 이름  ("이미지.확장자" 형태 )
- * @returns "preSignedURL"와 "photoURL"을 반환 ( "photoURL"은 정상적으로 완료 시 이미지 url )
+ * @returns "preSignedURL" 반환
  */
 export const getPresignedURL: ApiFetchPresignedURLHandler = ({ name }) => {
   const photoURL = convertS3ImagePath(name);

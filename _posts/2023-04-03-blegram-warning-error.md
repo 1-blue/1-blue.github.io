@@ -40,7 +40,6 @@ const NotFoundCatchAll = () => notFound();
 export default NotFoundCatchAll;
 ```
 
-
 ## 📮 레퍼런스
 1. [stackoverflow](https://stackoverflow.com/questions/75302340/not-found-page-does-not-work-in-next-js-13){:target="_blank"}
 
